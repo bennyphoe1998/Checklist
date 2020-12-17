@@ -1,0 +1,27 @@
+CREATE DATABASE checklist;
+
+CREATE TABLE topic (
+    tid SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE topicActivities (
+    tid INTEGER NOT NULL REFERENCES topic(tid) ON DELETE CASCADE,
+    aid SERIAL PRIMARY KEY,
+    description VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE topicDates (
+    tid INTEGER NOT NULL REFERENCES topic(tid) ON DELETE CASCADE,
+    did SERIAL PRIMARY KEY,
+    date DATE NOT NULL
+);
+
+
+CREATE TABLE dateActivities (
+    tid INTEGER REFERENCES topic(tid) ON DELETE CASCADE,
+    aid INTEGER REFERENCES topicActivities(aid) ON DELETE CASCADE,
+    did INTEGER REFERENCES topicDates(did) ON DELETE CASCADE,
+    PRIMARY KEY (tid, aid, did)
+);
+
